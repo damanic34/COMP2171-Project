@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Package Tracking</title>
+</head>
+<body>
+    <h2>Track Your Package</h2>
+    <input type="text" id="trackingNumber" placeholder="Enter Tracking Number">
+    <button onclick="trackPackage()">Track</button>
+    <p id="packageDetails"></p>
+
+    <script>
+        function trackPackage() {
+            let trackingNumber = document.getElementById("trackingNumber").value;
+            fetch(`http://localhost:8080/packages/${trackingNumber}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("packageDetails").innerText = 
+                        `Status: ${data.status}\nOrigin: ${data.origin}\nDestination: ${data.destination}`;
+                })
+                .catch(error => {
+                    document.getElementById("packageDetails").innerText = "Package not found!";
+                });
+        }
+    </script>
+</body>
+</html>
